@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -174,11 +175,11 @@ fun Pantalla2(onBack: () -> Unit) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Ahora\n25°", color = Color.White)
-                        Text("14:00\n26°", color = Color.White)
-                        Text("16:00\n24°", color = Color.White)
-                        Text("18:00\n22°", color = Color.White)
-                        Text("20:00\n20°", color = Color.White)
+                        Text("Ahora\n☀\n25°", color = Color.White)
+                        Text("14:00\n☀\n26°", color = Color.White)
+                        Text("16:00\n☁\n24°", color = Color.White)
+                        Text("18:00\n☁\n22°", color = Color.White)
+                        Text("20:00\n☁\n20°", color = Color.White)
                     }
                 }
             }
@@ -224,19 +225,35 @@ fun Pantalla2(onBack: () -> Unit) {
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Pronóstico semanal", color = Color.White)
+                Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+                    Text("Pronóstico semanal", color = Color.White, modifier = Modifier.padding(bottom = 16.dp))
 
-                    Text("Lun   28° / 22°", color = Color.White)
-                    Text("Mar   27° / 21°", color = Color.White)
-                    Text("Mié   26° / 20°", color = Color.White)
-                    Text("Jue   25° / 19°", color = Color.White)
-                    Text("Vie   24° / 18°", color = Color.White)
+                    // Solo llamas a la función "FilaClima" para cada día
+                    FilaClima("Lun", "☀️", "28° / 22°")
+                    FilaClima("Mar", "⛅", "27° / 21°")
+                    FilaClima("Mié", "🌧️", "26° / 20°")
+                    FilaClima("Jue", "⛅", "25° / 19°")
+                    FilaClima("Vie", "🌦️", "24° / 18°")
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
 
         }
+    }
+}
+
+@Composable
+fun FilaClima(dia: String, icono: String, temperatura: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(dia, color = Color.White, modifier = Modifier.weight(1f))
+        Text(icono, modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
+        Text(temperatura, color = Color.White, modifier = Modifier.weight(1f), textAlign = TextAlign.End)
     }
 }
